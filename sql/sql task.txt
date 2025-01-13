@@ -1,0 +1,783 @@
+#task 1 
+CREATE DATABASE  university;
+USE university;
+CREATE TABLE Students(
+ student_id INT primary KEY ,
+  first_name VARCHAR(100),
+  last_name VARCHAR(100),
+  email   VARCHAR(100),
+ phone VARCHAR(20) ,
+ date_of_birth DATE ,
+ enrollment_date DATE,
+department_id INT );
+
+CREATE TABLE Courses(
+course_id INT  Primary key,
+ course_name VARCHAR(100) ,
+  department_id INT,
+professor_id INT,
+ credits INT);
+ 
+ CREATE TABLE Departments (
+ department_id INT  Primary key,
+ department_name VARCHAR(100));
+
+CREATE TABLE Professors ( 
+professor_id INT PRIMARY KEY,
+first_name VARCHAR(100),
+last_name VARCHAR(100),
+email VARCHAR(100),
+phone VARCHAR(20));
+
+CREATE TABLE Enrollments (
+enrollment_id INT PRIMARY KEY ,
+student_id INT ,
+course_id INT ,
+enrollment_date DATE,
+grade VARCHAR(5));
+
+# FK IN STUDENT TABLE  REFERANCE OF DEPARTMENTS 
+ALTER TABLE Students
+ADD CONSTRAINT fk_departments 
+FOREIGN KEY ( department_id)
+REFERENCES  Departments( department_id);
+
+# FK IN COURSES TABLE REFERANCE OF DEPARTMENTS
+ALTER TABLE Courses
+ADD constraint fk_course
+foreign key (department_id)
+references Departments(department_id);
+
+# FK IN COURSES TABLE REFERANCE OF PROFRSSOR 
+ALTER TABLE Courses
+ADD constraint FK_COURSES 
+FOREIGN KEY (professor_id) 
+REFERENCES Professors (professor_id);
+
+# FK IN ENTROLLMENT TABLE REFERANCE OF COURSES
+ALTER TABLE Enrollments 
+ADD CONSTRAINT FK_Enrollments
+FOREIGN KEY (course_id)
+REFERENCES Courses( course_id);
+
+# DATA FOR STUDENT TABLE 
+INSERT INTO Students (student_id, first_name, last_name, email, phone, date_of_birth, enrollment_date, department_id)
+VALUES
+(1, 'John', 'Doe', 'johndoe@example.com', '123-456-7890', '2000-01-15', '2022-08-01', 101),
+(2, 'Jane', 'Smith', 'janesmith@example.com', '987-654-3210', '1999-03-22', '2021-09-15', 102),
+(3, 'Michael', 'Brown', 'michaelbrown@example.com', '555-123-4567', '2001-06-12', '2023-01-10', 103),
+(4, 'Emily', 'Davis', 'emilydavis@example.com', '444-789-1234', '1998-11-08', '2020-05-20', 104),
+(5, 'David', 'Wilson', 'davidwilson@example.com', '333-456-7891', '2000-05-25', '2022-07-12', 101),
+(6, 'Sophia', 'Taylor', 'sophiataylor@example.com', '222-123-4568', '2002-02-14', '2024-01-01', 102),
+(7, 'Liam', 'Martinez', 'liammartinez@example.com', '111-654-3219', '1997-12-30', '2019-09-10', 103),
+(8, 'Olivia', 'Anderson', 'oliviaanderson@example.com', '999-555-7890', '2003-04-18', '2023-09-15', 104),
+(9, 'James', 'Thomas', 'jamesthomas@example.com', '888-444-3333', '1999-07-05', '2021-01-20', 101),
+(10, 'Emma', 'White', 'emmawhite@example.com', '777-222-1111', '2001-09-11', '2022-11-30', 102);
+
+
+#DATA FOR DEPARTMENT TABLE 
+INSERT INTO Departments (department_id, department_name)
+VALUES
+(101, 'Computer Science'),
+(102, 'Business Administration'),
+(103, 'Mechanical Engineering'),
+(104, 'Electrical Engineering'),
+(105, 'Biotechnology'),
+(106, 'Civil Engineering'),
+(107, 'Mathematics'),
+(108, 'Physics'),
+(109, 'Chemistry'),
+(110, 'Psychology');
+
+# DATA FOR COURSE TABLE
+INSERT INTO Courses (course_id, course_name, department_id, professor_id, credits)
+VALUES
+(201, 'Introduction to Programming', 101, 301, 3),
+(202, 'Data Structures', 101, 302, 4),
+(203, 'Marketing Principles', 102, 303, 3),
+(204, 'Organizational Behavior', 102, 304, 3),
+(205, 'Thermodynamics', 103, 305, 4),
+(206, 'Circuit Analysis', 104, 306, 4),
+(207, 'Genetics and Molecular Biology', 105, 307, 3),
+(208, 'Structural Engineering', 106, 308, 4),
+(209, 'Linear Algebra', 107, 309, 3),
+(210, 'Quantum Mechanics', 108, 310, 4);
+
+# DATA FOR  PROFEESSOR TABLE 
+INSERT INTO Professors (professor_id, first_name, last_name, email, phone)
+VALUES
+(301, 'Alice', 'Johnson', 'alice.johnson@example.com', '555-123-4567'),
+(302, 'Robert', 'Smith', 'robert.smith@example.com', '555-234-5678'),
+(303, 'Maria', 'Garcia', 'maria.garcia@example.com', '555-345-6789'),
+(304, 'James', 'Williams', 'james.williams@example.com', '555-456-7890'),
+(305, 'Emily', 'Brown', 'emily.brown@example.com', '555-567-8901'),
+(306, 'Michael', 'Jones', 'michael.jones@example.com', '555-678-9012'),
+(307, 'Sarah', 'Davis', 'sarah.davis@example.com', '555-789-0123'),
+(308, 'David', 'Martinez', 'david.martinez@example.com', '555-890-1234'),
+(309, 'Sophia', 'Taylor', 'sophia.taylor@example.com', '555-901-2345'),
+(310, 'Daniel', 'White', 'daniel.white@example.com', '555-012-3456');
+
+# DATA FOR ENTROLMENT TABLE
+INSERT INTO Enrollments (enrollment_id, student_id, course_id, enrollment_date, grade)
+VALUES
+(1, 1, 201, '2023-09-01', 'A'),
+(2, 2, 202, '2023-09-02', 'B+'),
+(3, 3, 203, '2023-09-03', 'A-'),
+(4, 4, 204, '2023-09-04', 'B'),
+(5, 5, 205, '2023-09-05', 'C+'),
+(6, 6, 206, '2023-09-06', 'A'),
+(7, 7, 207, '2023-09-07', 'B-'),
+(8, 8, 208, '2023-09-08', 'A+'),
+(9, 9, 209, '2023-09-09', 'B'),
+(10, 10, 210, '2023-09-10', 'A');
+
+INSERT INTO Enrollments (enrollment_id, student_id, course_id, enrollment_date, grade)
+VALUES
+(11, 1, NULL, '2023-09-01', 'A');
+
+SELECT * FROM students;
+
+select count name from students ;
+
+# Find the Total Number of Students in Each Department
+SELECT d.department_name, COUNT(s.student_id) AS total_students
+FROM Students s
+JOIN Departments d ON s.department_id = d.department_id
+GROUP BY d.department_name;
+
+#List All Courses Taught by a Specific Professor
+SELECT c.course_name, d.department_name,first_name
+FROM Courses c
+JOIN Professors p ON c.professor_id = p.professor_id
+JOIN Departments d ON c.department_id = d.department_id
+WHERE p.first_name = 'Daniel' AND p.last_name = 'White';
+
+# Find the Average Grade of Students in Each Course
+ SELECT c.course_name, AVG(e.grade)
+FROM Enrollments e
+JOIN Courses c ON e.course_id = c.course_id
+GROUP BY c.course_name;
+
+
+# List All Students Who Have Not Enrolled in Any Courses
+SELECT st.student_id,st.first_name
+FROM students AS st 
+JOIN enrollments 
+	on 
+		st.student_id = enrollments.student_id
+where enrollments.course_id IS NULL;
+
+
+# Find the Number of Courses Offered by Each Department
+SELECT dt.department_id,dt.department_name, COUNT(ct.course_id)
+FROM departments AS dt
+JOIN courses AS ct
+ON dt.department_id = ct.department_id
+GROUP BY  ct.department_id;
+
+# List All Students Who Have Taken a Specific Course (e.g., 'Database Systems')
+SELECT s.first_name, c.course_name
+FROM students s
+JOIN enrollments e ON s.student_id = e.student_id
+JOIN courses c ON e.course_id = c.course_id
+WHERE c.course_name = 'Data Structures';
+
+#Find the Most Popular Course Based on Enrollment Numbers
+
+
+
+# 10. Get the Highest and Lowest Grade in a Specific Course (e.g., 'Operating Systems')
+-- Get the course_id for 'Operating Systems'
+SELECT course_id FROM Courses WHERE course_name = 'Operating Systems';
+
+-- Assuming the course_id for 'Operating Systems' is retrieved (e.g., 211):
+SELECT 
+    MAX(grade) AS Highest_Grade,
+    MIN(grade) AS Lowest_Grade
+FROM 
+    Enrollments
+WHERE 
+    course_id = (SELECT course_id FROM Courses WHERE course_name = 'Operating Systems');
+    
+   # task 2 
+   CREATE DATABASE Ola;
+ USE OLA;
+ 
+CREATE TABLE Drivers(
+diver_id int primary key,
+first_name VARCHAR(100),
+last_name VARCHAR(100),
+phone VARCHAR(14),
+city VARCHAR(50),
+vehicletype ENUM("Sedan","Hatchback","SUV"),
+rating INT CHECK(rating BETWEEN 0 AND 5)
+);
+
+CREATE  TABLE riders(
+rider_id  INT PRIMARY KEY ,
+first_name VARCHAR(100),
+ last_name VARCHAR(100),
+phone VARCHAR(14),
+city VARCHAR(50),
+joindate DATE );
+
+CREATE TABLE rides(
+ride_id INT PRIMARY KEY,
+rider_id INT ,
+driver_id INT,
+ridedate DATE,
+pickup_loc TEXT,
+drop_loc TEXT,
+distance DECIMAL ,
+fare DECIMAL,
+ride_status ENUM("Completed","Cancelled","Ongoing"));
+
+CREATE TABLE  payments(
+payments_id INT PRIMARY KEY ,
+ride_id INT ,
+payment_method ENUM("CARD","CASH","WALLET") ,
+amount int ,
+payment_date DATETIME);
+
+# FK IN RIDES TABLE REFERANCE RIDERS TABLE
+ALTER TABLE rides 
+ADD CONSTRAINT FK_rides 
+FOREIGN KEY (rider_id)
+REFERENCES riders( rider_id);
+
+# FK IN RIDES TABLE REFERANCE DRIVERS TABLE
+ALTER TABLE rides
+ADD CONSTRAINT FK_ride
+FOREIGN KEY (driver_id)
+REFERENCES drivers (diver_id);
+
+# FK IN PAYMENTS TABLE REFERANCE RIDES TABLE
+ALTER TABLE payments
+ADD CONSTRAINT FK_PAY
+FOREIGN KEY (ride_id)
+REFERENCES RIDES (RIDE_ID );
+
+
+INSERT INTO Drivers
+ (diver_id,first_name , last_name, Phone, City, VehicleType, Rating)
+ VALUES
+(1, 'John', 'Smith', '123-456-7890', 'New York', 'Sedan', 4.5),
+(2, 'Emily', 'Johnson', '987-654-3210', 'Los Angeles', 'SUV', 4.8),
+(3, 'Ahmed', 'Khan', '456-789-1234', 'Chicago', 'Hatchback', 4.2),
+(4, 'Priya', 'Patel', '321-654-9870', 'Houston', 'Sedan', 4.7),
+(5, 'David', 'Lee', '789-123-4567', 'Miami', 'SUV', 4.6);
+
+INSERT INTO Riders (rider_id , first_name ,last_name , Phone, City, JoinDate) 
+VALUES
+(1, 'Sarah', 'Williams', '111-222-3333', 'New York', '2023-01-15'),
+(2, 'Mark', 'Brown', '222-333-4444', 'Los Angeles', '2022-12-10'),
+(3, 'Aisha', 'Ahmed', '333-444-5555', 'Chicago', '2023-02-20'),
+(4, 'Liam', 'Garcia', '444-555-6666', 'Houston', '2023-03-05'),
+(5, 'Sophia', 'Davis', '555-666-7777', 'Miami', '2023-01-25');
+
+
+INSERT INTO Rides (ride_id , rider_id, driver_id, ridedate, pickup_loc, drop_loc, distance, fare, ride_Status)
+ VALUES
+(1, 1, 2, '2023-12-20', 'Times Square', 'Central Park', 5.2, 15.50, 'Completed'),
+(2, 3, 1, '2023-12-22', 'Downtown Chicago', 'O\'Hare Airport', 28.5, 45.00, 'Completed'),
+(3, 4, 3, '2024-01-05', 'Houston Museum', 'Rice University', 3.7, 10.00, 'Completed'),
+(4, 5, 4, '2024-01-10', 'Miami Beach', 'Wynwood', 8.0, 20.75, 'Cancelled'),
+(5, 2, 5, '2024-01-15', 'Hollywood', 'Beverly Hills', 12.3, 35.00, 'Ongoing');
+
+
+select * from rides;
+
+INSERT INTO payments (payments_id,ride_id, payment_method ,amount,payment_date)
+VALUES 
+(1, 1, 'Card', 15.50, '2025-01-01'),
+(2, 2, 'Cash', 12.00, '2025-01-02'),
+(3, 3, 'Wallet', 18.75, '2025-01-03'),
+(4, 4, 'Card', 22.00, '2025-01-04'),
+(5, 5, 'Cash', 9.25, '2025-01-05');
+
+select * from payments;
+
+#Retrieve the names and contact details of all drivers with a rating of 4.5 or higher.
+SELECT  first_name,phone
+FROM drivers
+WHERE  rating >= 4.5 ;
+
+# 2. Find the total number of rides completed by each driver.
+SELECT first_name
+FROM drivers d
+JOIN Rides r 
+ON r.driver_id = d.diver_id
+WHERE r.ride_status ="completed";
+
+# 3. List all riders who have never booked a ride.
+SELECT first_name
+FROM drivers d
+JOIN Rides r 
+ON r.driver_id = d.diver_id
+WHERE r.ride_status <>"completed";
+
+# 4. Calculate the total earnings of each driver from completed rides.
+SELECT d.diver_id AS Driver_ID,
+    d.first_name AS Driver_FirstName,
+    d.last_name AS Driver_LastName,
+    SUM(r.fare) AS Total_Earnings
+FROM rides r
+JOIN drivers d
+ON r.driver_id = d.diver_id
+WHERE r.ride_status = 'Completed'
+GROUP BY d.diver_id, d.first_name, d.last_name;
+
+# Retrieve the most recent ride for each rider. 
+SELECT rt.first_name,
+    rt.last_name,
+    MAX(rd.ridedate) AS curr_date
+FROM Riders AS rt
+JOIN Rides AS rd
+ON rt.rider_id =rd.rider_id
+GROUP BY rt.rider_id;
+
+#  Count the number of rides taken in each city.
+SELECT pickup_loc,
+    drop_loc,
+    COUNT(ride_id) AS count_rid
+FROM Rides
+GROUP BY pickup_loc,drop_loc;
+
+# List all rides where the distance was greater than 20 km.
+SELECT *
+FROM Rides
+WHERE distance >=20;
+
+#Identify the most preferred payment method.
+SELECT
+	payment_method,
+    COUNT(payment_method) AS num
+FROM Payments
+GROUP BY payment_method
+ORDER BY num DESC
+LIMIT 1;
+
+
+ USE OLA;
+
+#Find the top 3 highest-earning drivers.
+
+SELECT dr.first_name,
+    SUM(rd.fare) AS far
+FROM Drivers AS dr
+JOIN Rides AS rd
+ON rd.driver_id = dr.diver_id
+GROUP BY dr.diver_id,dr.first_name
+ORDER BY far DESC
+LIMIT 3;
+
+#Retrieve details of all cancelled rides along with the rider's and driver's names
+SELECT CONCAT(dr.first_name,' ',dr.last_name) AS driver_name,
+  CONCAT(rt.first_name,' ',rt.last_name) AS rider_name
+FROM Drivers AS dr
+JOIN Rides AS rd
+ON rd.driver_id = dr.diver_id
+JOIN Riders AS rt 
+ON rt.rider_id = rd.rider_id
+WHERE rd.ride_status='Cancelled';
+
+#task 3
+CREATE DATABASE store;
+
+
+USE store;
+
+CREATE TABLE customers(
+customer_id INT PRIMARY KEY,
+first_name VARCHAR(100),
+last_name VARCHAR(100),
+email VARCHAR(100),
+phone VARCHAR(20),
+address TEXT,
+join_date DATE);
+
+
+CREATE TABLE products(
+product_id INT PRIMARY KEY,
+product_name VARCHAR(100),
+category VARCHAR(50),
+price DECIMAL(10,2),
+stock_quantity INT);
+
+
+
+CREATE TABLE orders(
+order_id INT PRIMARY KEY,
+customer_id INT,
+FOREIGN KEY(customer_id) REFERENCES customers(customer_id),
+order_date DATE,
+total_amount DECIMAL(10,2),
+order_status ENUM('Pending','Shipped'));
+
+
+CREATE TABLE order_details(
+order_detail_id INT PRIMARY KEY,
+order_id  INT,
+FOREIGN KEY(order_id ) 
+REFERENCES orders(order_id),
+product_id  INT,
+FOREIGN KEY(product_id )
+REFERENCES products(product_id),
+quantity  INT,
+unit_price  DECIMAL(10,2));
+
+CREATE TABLE payments(
+payment_id  INT PRIMARY KEY,
+order_id  INT,
+FOREIGN KEY(order_id ) 
+REFERENCES orders(order_id),
+payment_date DATE,
+payment_amount DECIMAL(10,2),
+payment_method ENUM('Credit_Card','PayPal'));
+
+
+
+INSERT INTO customers (customer_id, first_name, last_name, email, phone, address, join_date)
+VALUES
+(1, 'John', 'Doe', 'john.doe@example.com', '1234567890', '123 Elm Street, Springfield', '2022-01-15'),
+(2, 'Jane', 'Smith', 'jane.smith@example.com', '0987654321', '456 Oak Avenue, Springfield', '2022-02-20'),
+(3, 'Alice', 'Johnson', 'alice.johnson@example.com', '5678901234', '789 Pine Road, Shelbyville', '2022-03-10'),
+(4, 'Bob', 'Brown', 'bob.brown@example.com', '6789012345', '321 Maple Lane, Capital City', '2023-01-05');
+
+INSERT INTO products (product_id, product_name, category, price, stock_quantity)
+VALUES
+(101, 'Laptop', 'Electronics', 750.00, 50),
+(102, 'Smartphone', 'Electronics', 500.00, 100),
+(103, 'Desk Chair', 'Furniture', 120.00, 30),
+(104, 'Dining Table', 'Furniture', 250.00, 20),
+(105, 'Wireless Headphones', 'Accessories', 75.00, 200);
+
+
+INSERT INTO orders (order_id, customer_id, order_date, total_amount, order_status)
+VALUES
+(1001, 1, '2023-05-10', 1270.00, 'Shipped'),
+(1002, 2, '2023-05-15', 620.00, 'Pending'),
+(1003, 3, '2023-06-01', 500.00, 'Shipped'),
+(1004, 4, '2023-06-05', 195.00, 'Pending');
+
+INSERT INTO orders (order_id, customer_id, order_date, total_amount, order_status)
+VALUES
+(1005, 1, '2025-01-01', 1270.00, 'Shipped');
+
+
+INSERT INTO order_details (order_detail_id, order_id, product_id, quantity, unit_price)
+VALUES
+(1, 1001, 101, 1, 750.00),
+(2, 1001, 103, 2, 120.00), 
+(3, 1002, 102, 1, 500.00), 
+(4, 1002, 105, 2, 75.00),  
+(5, 1003, 102, 1, 500.00), 
+(6, 1004, 104, 1, 195.00);
+
+
+
+INSERT INTO payments (payment_id, order_id, payment_date, payment_amount, payment_method)
+VALUES
+(5001, 1001, '2023-05-11', 1270.00, 'Credit_Card'),
+(5002, 1003, '2023-06-02', 500.00, 'PayPal');
+
+# Find the Total Number of Orders for Each Customer
+
+SELECT CONCAT(ct.first_name,' ',ct.last_name),
+    COUNT(od.order_id) AS o_count
+FROM customers AS ct
+JOIN orders AS od
+ON ct.customer_id = od.customer_id
+GROUP BY ct.customer_id;
+	
+
+# Find the Total Sales Amount for Each Product (Revenue per Product)
+SELECT pt.product_name,
+    SUM(od.quantity * od.unit_price) AS total_revenue
+FROM products AS pt 
+JOIN order_details AS od
+ON od.product_id = pt.product_id
+GROUP BY pt.product_id;
+    
+    
+    
+# Find the Most Expensive Product Sold
+
+SELECT pt.product_name,
+    od.unit_price
+FROM products AS pt
+JOIN order_details AS od
+ON od.product_id = pt.product_id
+ORDER BY od.unit_price DESC
+LIMIT 1;
+
+
+# Get the List of Customers Who Have Placed Orders in the Last 30 Days
+
+SELECT ct.customer_id,
+    ct.first_name,
+    ot.order_date
+FROM customers AS ct
+JOIN orders AS ot 
+ON ct.customer_id = ot.customer_id
+WHERE ot.order_date >=  CURDATE()  - INTERVAL 30 DAY;
+    
+# Calculate the Total Amount Paid by Each Customer
+
+SELECT ct.customer_id,
+    ct.first_name,
+    SUM(pt.payment_amount) AS total_amount
+FROM customers AS ct
+JOIN orders AS ot
+ON ct.customer_id = ot.customer_id
+JOIN payments AS pt
+ON ot.order_id = pt.order_id
+GROUP BY ct.customer_id;
+    
+#Get the Number of Products Sold by Category
+
+SELECT pt.category,
+    SUM(od.quantity) AS NUM
+FROM order_details AS od
+JOIN products AS pt
+ON pt.product_id = od.product_id
+GROUP BY pt.category;
+    
+    
+# List All Orders That Are Pending (i.e., Orders that haven't been shipped yet)
+SELECT *
+FROM orders
+WHERE order_status = 'Pending';
+	
+#Find the Average Order Value (Total Order Amount / Number of Orders)
+
+SELECT ROUND(SUM(total_amount)/COUNT(order_id),2) AS avg_value
+FROM orders;
+    
+
+# List the Top 5 Customers Who Have Spent the Most Money
+
+SELECT ct.customer_id,
+    ct.first_name,
+    SUM(payment_amount) AS total_pay
+FROM customers AS ct
+JOIN orders AS ot
+ON ct.customer_id = ot.customer_id
+JOIN payments AS p
+ ON ot.order_id = p.order_id 
+GROUP BY ct.customer_id;
+    
+    
+#Find the Products That Have Never Been Sold
+
+SELECT pt.product_name,
+    pt.category
+FROM products AS pt
+LEFT JOIN order_details AS od
+ON pt.product_id = od.product_id
+WHERE od.product_id IS NULL;
+
+# task 5
+CREATE DATABASE Zomato;
+
+
+USE Zomato;
+
+CREATE TABLE Restaurants(
+restaurants_id INT PRIMARY KEY,
+name VARCHAR(100),
+city VARCHAR(100),
+cuisine_type ENUM ('Indian','Chinese','Italian'),
+rating INT check (rating between 0 AND 5),
+average VARCHAR(100)
+);
+
+CREATE TABLE Customers(
+customer_id INT PRIMARY KEY,
+first_name VARCHAR(20),
+last_name VARCHAR(20),
+phone VARCHAR(14),
+city VARCHAR(50),
+join_date DATE);
+
+CREATE TABLE Orders(
+order_id INT PRIMARY KEY,
+customer_id INT,
+FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),
+res_id INT,
+FOREIGN KEY (res_id) REFERENCES Restaurants(restaurants_id),
+order_date DATE,
+order_amount DECIMAL(10,2),
+order_status ENUM ('Delivered','Cancelled','Pending'));
+
+CREATE TABLE Reviews(
+review_id INT PRIMARY KEY,
+customer_id INT,
+FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),
+res_id INT,
+FOREIGN KEY (res_id) REFERENCES Restaurants(restaurants_id),
+rating INT check (rating between 0 AND 5),
+comment TEXT,
+review_date DATE);
+
+CREATE TABLE Payments(
+payment_id INT PRIMARY KEY,
+order_id INT,
+FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+payment_m ENUM ('Card','Cash','Wallet'),
+amount DECIMAL(10,2),
+payment_date DATE);
+
+INSERT INTO Restaurants (restaurants_id, name, city, cuisine_type, rating, average) VALUES
+(1, 'The Royal Feast', 'Delhi', 'Indian', 4, '₹500'),
+(2, 'Dragon Palace', 'Mumbai', 'Chinese', 4, '₹400'),
+(3, 'Pasta Piazza', 'Bangalore', 'Italian', 3, '₹600'),
+(4, 'Curry Leaves', 'Chennai', 'Indian', 5, '₹350'),
+(5, 'The Noodle House', 'Kolkata', 'Chinese', 3, '₹450');
+
+INSERT INTO Restaurants (restaurants_id, name, city, cuisine_type, rating, average) VALUES
+(6, 'RSB_RS', 'Mumbai', 'Italian', 5, '₹800');
+
+
+
+INSERT INTO Customers (customer_id, first_name, last_name, phone, city, join_date) VALUES
+(101, 'John', 'Doe', '9876543210', 'Delhi', '2022-01-10'),
+(102, 'Jane', 'Smith', '9123456789', 'Mumbai', '2021-05-20'),
+(103, 'Mike', 'Johnson', '9998887777', 'Bangalore', '2023-02-15'),
+(104, 'Emily', 'Clark', '8800112233', 'Chennai', '2022-07-30'),
+(105, 'David', 'Brown', '8112233445', 'Kolkata', '2020-11-25');
+
+INSERT INTO Customers (customer_id, first_name, last_name, phone, city, join_date) VALUES
+(106, 'shivam', 'Doe', '9876543210', 'Delhi', '2012-01-10');
+
+
+
+INSERT INTO Orders (order_id, customer_id, res_id, order_date, order_amount, order_status) VALUES
+(1001, 101, 1, '2023-01-20', 500.00, 'Delivered'),
+(1002, 102, 2, '2023-02-15', 400.00, 'Delivered'),
+(1003, 103, 3, '2023-03-10', 600.00, 'Pending'),
+(1004, 104, 4, '2023-04-05', 350.00, 'Delivered'),
+(1005, 105, 5, '2023-05-01', 450.00, 'Cancelled');
+
+INSERT INTO Orders (order_id, customer_id, res_id, order_date, order_amount, order_status) VALUES
+(1006, 101, 1, '2024-01-20', 500.00, 'Delivered');
+
+
+INSERT INTO Reviews (review_id, customer_id, res_id, rating, comment, review_date) VALUES
+(1, 101, 1, 4, 'Great food, loved the ambiance!', '2023-01-22'),
+(2, 102, 2, 4, 'Nice place, tasty food!', '2023-02-18'),
+(3, 103, 3, 3, 'Food was okay, but not the best!', '2023-03-12'),
+(4, 104, 4, 5, 'Exceptional! The best curry I have ever had.', '2023-04-07'),
+(5, 105, 5, 2, 'Food was cold and tasteless, not recommended!', '2023-05-03');
+
+
+INSERT INTO Payments (payment_id, order_id, payment_m, amount, payment_date) VALUES
+(1, 1001, 'Card', 500.00, '2023-01-20'),
+(2, 1002, 'Cash', 400.00, '2023-02-15'),
+(3, 1003, 'Wallet', 600.00, '2023-03-10'),
+(4, 1004, 'Card', 350.00, '2023-04-05'),
+(5, 1005, 'Cash', 450.00, '2023-05-01');
+
+# Retrieve the names and locations of restaurants with a rating of 4.5 or higher.
+
+SELECT name,city,rating
+FROM restaurants
+WHERE rating >4.5;
+
+#2. Find the total number of orders placed by each customer.
+
+SELECT ct.customer_id,
+	ct.first_name,
+	COUNT(ot.order_id) AS item_count
+ FROM customers AS ct
+JOIN orders AS ot
+ON ct.customer_id = ot.customer_id
+GROUP BY ct.customer_id;
+ 
+	
+#3. List all restaurants offering "Italian" cuisine in "Mumbai".
+ SELECT name,city,cuisine_type
+ FROM restaurants
+ WHERE city = 'Mumbai'
+ AND cuisine_type='Italian';
+    
+#4. Calculate the total revenue generated by each restaurant from completed orders
+
+ SELECT rt.name,SUM(ot.order_amount) AS rss
+FROM restaurants AS rt
+JOIN orders AS ot
+ON rt.restaurants_id = ot.res_id
+WHERE ot.order_status = 'Delivered'
+GROUP BY rt.restaurants_id;
+    
+#5. Retrieve the most recent order placed by each customer.
+
+
+SELECT ct.first_name,
+    ct.last_name,
+    ot.order_date
+FROM customers AS ct
+JOIN orders AS ot
+ON ct.customer_id = ot.customer_id
+WHERE ot.order_date = (
+    SELECT MAX(order_date)
+    FROM orders
+    WHERE customer_id = ot.customer_id );
+
+#6. List customers who have not placed any orders yet.
+
+ SELECT ct.first_name,
+    ct.last_name,
+    ct.phone
+FROM customers AS ct
+LEFT JOIN orders AS ot
+ON ct.customer_id = ot.customer_id
+WHERE ot.customer_id IS NULL;
+    
+#7. Identify the most reviewed restaurants.
+
+SELECT rt.name,
+    rt.city,
+    MAX(rt.rating) AS rating 
+FROM restaurants AS rt
+GROUP BY  restaurants_id
+ORDER BY rating DESC
+LIMIT 1;
+
+#8. Find the most preferred payment method.
+
+SELECT payment_m,
+    COUNT(payment_m) AS counti
+FROM payments
+GROUP BY payment_m
+ORDER BY counti DESC
+LIMIT 1;
+
+#9. List the top 5 restaurants by total revenue
+
+SELECT rt.restaurants_id,
+    rt.name,
+    rt.city,
+    SUM(ot.order_amount) AS revenue
+FROM restaurants AS rt
+JOIN  orders AS ot
+ON  rt.restaurants_id = ot.res_id
+GROUP BY ot.res_id 
+ORDER BY revenue DESC
+LIMIT  1;
+
+#10. Show the details of all cancelled orders along with the customer's and restaurant's names.
+
+SELECT ct.customer_id,
+    ct.first_name,
+    ct.last_name,
+    rt.name,
+    ot.order_status
+FROM customers AS ct
+JOIN orders AS ot
+ON  ct.customer_id = ot.customer_id
+JOIN restaurants AS rt
+ON ot.res_id = rt.restaurants_id
+WHERE ot.order_status ='Cancelled'; 
+	
+    
